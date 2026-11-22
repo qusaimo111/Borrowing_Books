@@ -1,0 +1,218 @@
+{
+    "info": {
+      "name": "Borrowing Books API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      { "key": "base_url", "value": "http://127.0.0.1:8000/api" },
+      { "key": "token", "value": "" }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+    },
+    "item": [
+      {
+        "name": "Auth",
+        "item": [
+          {
+            "name": "Register",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/register",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"مستخدم جديد\",\n  \"phone\": \"0977777777\",\n  \"password\": \"123456\",\n  \"password_confirmation\": \"123456\",\n  \"location\": \"دمشق\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Login (Admin / User)",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/login",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"phone\": \"0999999999\",\n  \"password\": \"123456\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Logout",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/logout"
+            }
+          },
+          {
+            "name": "Profile",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/profile"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Categories & Books",
+        "item": [
+          {
+            "name": "Get Categories",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/categories"
+            }
+          },
+          {
+            "name": "Get Books by Category",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/categories/1/books"
+            }
+          },
+          {
+            "name": "Get / Search Books",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/books?search=الخيميائي"
+            }
+          },
+          {
+            "name": "Book Details",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/books/1"
+            }
+          },
+          {
+            "name": "Add Book (Admin)",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/books",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"category_id\": 1,\n  \"title\": \"كتاب جديد\",\n  \"author\": \"اسم المؤلف\",\n  \"quantity\": 10,\n  \"price\": 5000,\n  \"description\": \"وصف الكتاب\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "item": [
+          {
+            "name": "Get Orders",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/orders"
+            }
+          },
+          {
+            "name": "Create Order",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/orders",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"location\": \"دمشق - المزة\",\n  \"payment_info\": \"الدفع عند الاستلام\",\n  \"items\": [\n    { \"book_id\": 1, \"quantity\": 2, \"return_date\": \"2026-12-10\" }\n  ]\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Update Order Status (preparing/sent/received)",
+            "request": {
+              "method": "PATCH",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/orders/1/status",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"status\": \"sent\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Update Payment Status (Admin)",
+            "request": {
+              "method": "PATCH",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/orders/1/payment-status",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"payment_status\": \"paid\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Extras (Favorites, Reports, Notifications)",
+        "item": [
+          {
+            "name": "Get Favorites",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/favorites"
+            }
+          },
+          {
+            "name": "Toggle Favorite",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/favorites/1/toggle"
+            }
+          },
+          {
+            "name": "Report: Orders Summary",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/reports/orders-summary?from_date=2026-11-01&to_date=2026-12-30"
+            }
+          },
+          {
+            "name": "Report: Top Books",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/reports/top-books?from_date=2026-11-01&to_date=2026-12-30"
+            }
+          },
+          {
+            "name": "Check Return Reminders (Admin)",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/notifications/check-reminders"
+            }
+          },
+          {
+            "name": "Get Notifications",
+            "request": {
+              "method": "GET",
+              "header": [{ "key": "Accept", "value": "application/json" }],
+              "url": "{{base_url}}/notifications"
+            }
+          }
+        ]
+      }
+    ]
+  }
